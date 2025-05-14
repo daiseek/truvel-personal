@@ -1,7 +1,9 @@
 spring:
+  config:
+    import: optional:file:.env[.properties] #.env파일 읽기
   datasource:
-    url: jdbc:mysql://localhost:3306/your_database_name?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    username: ${DB_USERNAME}
+    url: ${DB_URL}
+    username: ${DB_USER}
     password: ${DB_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
