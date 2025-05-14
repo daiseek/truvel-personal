@@ -19,4 +19,4 @@ RUN ./gradlew build -x test
 
 # 7. 빌드된 JAR 파일 경로 지정 (build/libs 아래 생성된 JAR)
 # 보통은 build/libs/*.jar 하나만 생성됨
-CMD ["java", "-jar", "build/libs/my-spring-boot-app-1.0.0-SNAPSHOT.jar"]
+CMD ["java", "-jar", "build/libs/truvel-0.0.1-SNAPSHOT.jar"]
