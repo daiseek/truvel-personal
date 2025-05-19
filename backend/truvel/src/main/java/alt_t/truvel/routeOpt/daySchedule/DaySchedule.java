@@ -1,5 +1,7 @@
-package alt_t.truvel.routeOpt;
+package alt_t.truvel.routeOpt.daySchedule;
 
+import alt_t.truvel.routeOpt.Location;
+import alt_t.truvel.routeOpt.travelPlan.TravelPlan;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,6 +14,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@Table(name = "day_schedule")
 public class DaySchedule {
 
     @Id
