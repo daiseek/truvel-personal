@@ -9,20 +9,20 @@ services:
       MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASSWORD}
     ports:
-      - "3306:3306"
+      - "3308:3306"
     volumes:
       - mysql-data:/var/lib/mysql
 
-  web:
-    build: .
-    container_name: springboot_web
-    restart: always
-    ports:
-      - "8080:8080"
-    env_file:
-      - .env
-    depends_on:
-      - mysql
+#  web:
+#    build: .
+#    container_name: springboot_web
+#    restart: always
+#    ports:
+#      - "8080:8080"
+#    env_file:
+#      - .env
+#    depends_on:
+#      - mysql
 
 volumes:
   mysql-data:
