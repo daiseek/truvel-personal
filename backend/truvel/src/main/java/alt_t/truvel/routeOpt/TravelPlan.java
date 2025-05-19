@@ -12,14 +12,13 @@ import java.util.List;
 @Getter
 @Setter
 public class TravelPlan {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long travelPlanId;
+    private Long travel_plan_id;
 
-    @Column(nullable = false)
-    private Long budgetTrackerId;
-
+    // 가계부 외래키
+//    @Column(nullable = false)
+//    private Long budgetTrackerId;
     @Column(nullable = false)
     private String nation;
 
