@@ -7,8 +7,9 @@ import java.time.LocalDate;
 
 @Entity
 @Getter
-@Table(name="TravelPlan")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Table(name="travel_plan")
 public class TravelPlan {
 
     @Id
