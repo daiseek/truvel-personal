@@ -52,7 +52,7 @@ public class TravelPlan {
 
 
     //--연관관계 매핑--//
-    @OneToMany(mappedBy = "travelPlan", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "day_schedule_id", cascade = CascadeType.ALL)
     private List<DaySchedule> daySchedules = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -73,7 +73,7 @@ public class TravelPlan {
     }
 
 
-    @OneToMany(mappedBy = "travel_plan", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "location_id", cascade = CascadeType.ALL)
     private List<Location> locations = new ArrayList<>();
 
     public void addLocation(Location location) {

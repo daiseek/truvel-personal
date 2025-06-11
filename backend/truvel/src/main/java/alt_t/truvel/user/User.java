@@ -2,6 +2,7 @@ package alt_t.truvel.user;
 
 import alt_t.truvel.travelPlan.TravelPlan;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -13,9 +14,10 @@ import java.util.List;
  */
 @Entity
 @Getter
+@Builder
 public class User {
 
-    @Column
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

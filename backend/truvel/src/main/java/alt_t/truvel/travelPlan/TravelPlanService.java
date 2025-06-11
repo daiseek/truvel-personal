@@ -1,5 +1,7 @@
 package alt_t.truvel.travelPlan;
 
+import alt_t.truvel.user.User;
+import alt_t.truvel.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,20 +16,28 @@ public class TravelPlanService {
 
     private final TravelPlanRepository travelPlanRepository;
 
+    private final UserRepository userRepository;
+
+
     /**
      * 일정 생성 기능을 하나로 통합한 메서드
-     * @param draftRequest
-     * @param dateRequest
-     * @return
+     * @param draftRequest : 1단계, 여행 국가와 날짜를 입력
+     * @param dateRequest : 2단계 여행 일자를 입력
+     * @return : 응답 성공 메시지와 DB에 저장된 여행계획의 아이디
      */
     @Transactional
     public TravelPlanDateResponse createTravelPlanWithDate(
+            Long userId,
             TravelPlanDraftRequest draftRequest,
             TravelPlanDateRequest dateRequest) {
 
         // 1단계: 초안 생성
         TravelPlan travelPlan = draftRequest.toTravelPlanDraft();
         travelPlanRepository.save(travelPlan);
+
+        // 유저 찾기
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new RuntimeException("유저를 찾을 수 없습니다."));
 
         // 2단계: 날짜 저장 (영속성 컨텍스트 유지됨)
         travelPlan.updateDates(dateRequest.getStartDate(), dateRequest.getEndDate());
@@ -36,6 +46,8 @@ public class TravelPlanService {
     }
 
 
+    // 일정 생성 - 국가/도시 메서드와 날짜 메서드는 사용되지 않습니다!
+    // API 통신시 트랜잭션이 적용되지 않아 통합하였습니다.
     /**
      * 일정 생성 - 국가/도시 메서드
      * @param request

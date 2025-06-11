@@ -22,7 +22,8 @@ public class Location {
     private Float longitude;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Long travelPlanId;
+    @JoinColumn(name = "travel_plan_id")
+    private TravelPlan travelPlanId;
 
 
     public void setTravelPlan(TravelPlan travelPlan) {
