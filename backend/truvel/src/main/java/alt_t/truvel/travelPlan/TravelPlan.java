@@ -1,10 +1,14 @@
 package alt_t.truvel.travelPlan;
 
+import alt_t.truvel.daySchedule.DaySchedule;
+import alt_t.truvel.location.Location;
+import alt_t.truvel.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -51,13 +55,29 @@ public class TravelPlan {
     @OneToMany(mappedBy = "travelPlan", cascade = CascadeType.ALL)
     private List<DaySchedule> daySchedules = new ArrayList<>();
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
 
 
     //--연관관계 메서드--//
+
     public void addDaySchedule(DaySchedule daySchedule) {
         this.daySchedules.add(daySchedule); // 이후에 DaySchedule 엔티티에 daySchedule.setTravelPlan(...) 메서드 필요
         daySchedule.setTravelPlan(this); // 양방향 설정
     }
 
 
+    public void setUser(User user) {
+    }
+
+
+    @OneToMany(mappedBy = "travel_plan", cascade = CascadeType.ALL)
+    private List<Location> locations = new ArrayList<>();
+
+    public void addLocation(Location location) {
+        this.locations.add(location);
+        location.setTravelPlan(this);
+    }
 }
