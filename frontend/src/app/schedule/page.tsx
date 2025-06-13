@@ -53,10 +53,7 @@ const DateButton: React.FC<DateButtonProps> = ({
 
 const TravelDatePicker: React.FC<CalendarProps> = ({
   onDateSelect,
-  initialDates = [
-    new Date(2025, 0, 21), // 1월 21일
-    new Date(2025, 0, 24), // 1월 24일
-  ],
+  initialDates = [],
   maxSelections,
 }) => {
   const [selectedDates, setSelectedDates] = useState<Date[]>(initialDates);
