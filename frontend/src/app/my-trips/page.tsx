@@ -105,22 +105,42 @@ const MyTripsPage = () => {
 
 export default MyTripsPage
 
+const IconButton = styled.button<{ $active: boolean }>`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 10px;
+  color: ${({ $active }) => ($active ? '#1C1C1C' : '#A0A0A0')};
+  font-weight: ${({ $active }) => ($active ? '700' : '400')};
+  transition: all 0.2s ease-in-out;
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    color: #1C1C1C;
+    font-weight: 600;
+  }
+
+  img {
+    margin-bottom: 0.25rem;
+  }
+`
+
 function HoverIconButton({ path, label, off, on, active = false }: HoverIconProps) {
   const router = useRouter()
   const [hover, setHover] = useState(false)
 
   return (
-    <button
+    <IconButton
       onClick={() => router.push(path)}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      className={`flex flex-col items-center text-[10px] ${
-        active ? 'text-[#1C1C1C] font-bold' : 'text-[#A0A0A0] hover:text-[#1C1C1C] hover:font-semibold'
-      } transition`}
+      $active={active}
     >
-      <Image src={hover || active ? on : off} alt={label} width={20} height={20} className="mb-1" />
+      <Image src={hover || active ? on : off} alt={label} width={20} height={20} />
       <span>{label}</span>
-    </button>
+    </IconButton>
   )
 }
 
