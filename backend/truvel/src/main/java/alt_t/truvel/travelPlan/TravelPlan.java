@@ -12,6 +12,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Table(name="travel_plan")
@@ -33,7 +34,6 @@ public class TravelPlan {
     @Column(nullable = false)
     private String city;
 
-    @Builder
     public TravelPlan(Long id, String nation, LocalDate startDate, LocalDate endDate, String city) {
         this.id = id;
         this.nation = nation;
@@ -52,16 +52,12 @@ public class TravelPlan {
 
 
     //--연관관계 매핑--//
-    @OneToMany(mappedBy = "day_schedule_id", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "travelPlan", cascade = CascadeType.ALL)
     private List<DaySchedule> daySchedules = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
 
-
-
-    //--연관관계 메서드--//
+    @OneToMany(mappedBy = "travelPlan", cascade = CascadeType.ALL)
+    private List<Location> locations = new ArrayList<>();
 
     public void addDaySchedule(DaySchedule daySchedule) {
         this.daySchedules.add(daySchedule); // 이후에 DaySchedule 엔티티에 daySchedule.setTravelPlan(...) 메서드 필요
@@ -69,15 +65,20 @@ public class TravelPlan {
     }
 
 
-    public void setUser(User user) {
-    }
-
-
-    @OneToMany(mappedBy = "location_id", cascade = CascadeType.ALL)
-    private List<Location> locations = new ArrayList<>();
-
     public void addLocation(Location location) {
         this.locations.add(location);
         location.setTravelPlan(this);
     }
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    public void setUser(User user) {
+    }
+
+
+
+
 }

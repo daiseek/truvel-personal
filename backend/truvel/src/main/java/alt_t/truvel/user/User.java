@@ -2,8 +2,7 @@ package alt_t.truvel.user;
 
 import alt_t.truvel.travelPlan.TravelPlan;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +14,9 @@ import java.util.List;
 @Entity
 @Getter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "truvel_user")
 public class User {
 
     @Id
@@ -36,6 +38,7 @@ public class User {
     @Column
     private byte locationConsent;
 
+    @Builder.Default
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TravelPlan> travelPlans = new ArrayList<>();
 

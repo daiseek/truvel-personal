@@ -46,7 +46,7 @@ public class DaySchedule {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "travel_plan_id")
-    private TravelPlan travelPlanId;
+    private TravelPlan travelPlan;
 
 
     public void setTravelPlan(TravelPlan travelPlan) {
