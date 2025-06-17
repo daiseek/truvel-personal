@@ -17,12 +17,13 @@ export const Header = styled.div`
 export const HeaderContent = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+
   padding: 1rem;
 `;
 
 export const BackButton = styled.button`
   padding: 0.5rem;
+  margin-right: 0.5rem;
   border-radius: 50%;
   transition: background-color 0.2s;
   border: none;
@@ -37,7 +38,9 @@ export const BackButton = styled.button`
 export const Title = styled.h1`
   font-size: 1.125rem;
   font-weight: 600;
+
   color: #111827;
+
   margin: 0;
 `;
 
@@ -61,7 +64,6 @@ export const CalendarContainer = styled.div`
 export const MonthSection = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
 `;
 
 export const MonthHeader = styled.div`
@@ -72,7 +74,7 @@ export const MonthHeader = styled.div`
 
 export const MonthTitle = styled.h2`
   font-size: 1.25rem;
-  font-weight: 700;
+  font-weight: 500;
   color: #111827;
   margin: 0;
 `;
@@ -91,7 +93,6 @@ export const WeekDaysGrid = styled.div`
   grid-template-columns: repeat(7, 1fr);
   gap: 0.5rem;
   padding: 0 0.25rem;
-  margin-bottom: 0.5rem;
 `;
 
 export const WeekDayCell = styled.div`

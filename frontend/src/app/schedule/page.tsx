@@ -8,10 +8,9 @@ import * as S from "./stlyes";
 interface CalendarProps {
   onDateSelect?: (dates: Date[]) => void;
   initialDates?: Date[];
-  maxSelections?: number;
 }
 
-type WeekDay = "일" | "월" | "화" | "수" | "목" | "금" | "토";
+type WeekDay = "S" | "M" | "T" | "W" | "T" | "F" | "S";
 
 interface DateButtonProps {
   date: Date;
@@ -54,7 +53,6 @@ const DateButton: React.FC<DateButtonProps> = ({
 const TravelDatePicker: React.FC<CalendarProps> = ({
   onDateSelect,
   initialDates = [],
-  maxSelections,
 }) => {
   const [selectedDates, setSelectedDates] = useState<Date[]>(initialDates);
 
@@ -115,34 +113,46 @@ const TravelDatePicker: React.FC<CalendarProps> = ({
 
   const handleDateClick = useCallback(
     (date: Date): void => {
-      // 현재 달(1월)에서만 선택 가능하도록 제한
-      if (date.getMonth() === 0 && date.getFullYear() === 2025) {
-        if (isDateSelected(date)) {
-          const newDates: Date[] = selectedDates.filter(
-            (selectedDate: Date) => !isSameDate(selectedDate, date)
-          );
-          setSelectedDates(newDates);
-          onDateSelect?.(newDates);
-        } else {
-          // maxSelections 체크
-          if (maxSelections && selectedDates.length >= maxSelections) {
-            return;
-          }
-          const newDates: Date[] = [...selectedDates, date];
-          setSelectedDates(newDates);
-          onDateSelect?.(newDates);
+      if (selectedDates.length === 0) {
+        // 첫 번째 날짜 선택
+        const newDates: Date[] = [date];
+        setSelectedDates(newDates);
+        onDateSelect?.(newDates);
+      } else if (selectedDates.length === 1) {
+        // 두 번째 날짜 선택 - 범위 생성
+        const firstDate = selectedDates[0];
+        const secondDate = date;
+
+        // 시작일과 종료일 결정
+        const startDate = firstDate <= secondDate ? firstDate : secondDate;
+        const endDate = firstDate <= secondDate ? secondDate : firstDate;
+
+        // 범위 내 모든 날짜 생성
+        const dateRange: Date[] = [];
+        const currentDate = new Date(startDate);
+
+        while (currentDate <= endDate) {
+          dateRange.push(new Date(currentDate));
+          currentDate.setDate(currentDate.getDate() + 1);
         }
+
+        setSelectedDates(dateRange);
+        onDateSelect?.(dateRange);
+      } else {
+        // 이미 범위가 선택된 상태에서 새로운 날짜 클릭 시 초기화하고 새로 시작
+        const newDates: Date[] = [date];
+        setSelectedDates(newDates);
+        onDateSelect?.(newDates);
       }
     },
-    [selectedDates, isDateSelected, isSameDate, onDateSelect, maxSelections]
+    [selectedDates, onDateSelect]
   );
 
   const renderCalendarGrid = useCallback(
     (monthDate: Date): React.ReactElement => {
       const daysInMonth: number = getDaysInMonth(monthDate);
       const firstDay: number = getFirstDayOfMonth(monthDate);
-      const isCurrentMonth: boolean =
-        monthDate.getMonth() === 0 && monthDate.getFullYear() === 2025; // 1월만 선택 가능
+      const isCurrentMonth: boolean = true;
 
       // 빈 셀 생성
       const emptyCells: React.ReactElement[] = [];
@@ -197,13 +207,13 @@ const TravelDatePicker: React.FC<CalendarProps> = ({
   }, [selectedDates, onDateSelect]);
 
   const weekDays: readonly WeekDay[] = [
-    "일",
-    "월",
-    "화",
-    "수",
-    "목",
-    "금",
-    "토",
+    "S",
+    "M",
+    "T",
+    "W",
+    "T",
+    "F",
+    "S",
   ] as const;
 
   return (
@@ -252,9 +262,7 @@ const TravelDatePicker: React.FC<CalendarProps> = ({
           onClick={handleComplete}
           $hasSelections={selectedDates.length > 0}
         >
-          {selectedDates.length > 0
-            ? `${selectedDates.length}개 날짜 선택 완료`
-            : "날짜를 선택해주세요"}
+          {selectedDates.length > 0 ? `선택 완료` : "날짜를 선택해주세요"}
         </S.CompleteButton>
       </S.BottomFixedContainer>
     </S.Container>
