@@ -1,5 +1,8 @@
 package alt_t.truvel.travelPlan;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
@@ -7,6 +10,7 @@ import lombok.Getter;
 import java.time.LocalDate;
 
 @Getter
+//@Builder
 public class TravelPlanRequest {
 
     @NotNull
@@ -16,32 +20,38 @@ public class TravelPlanRequest {
     private LocalDate endDate;
 
     @NotNull
-    private String nation;
+    private Long countryId;
 
     @NotNull
-    private String city;
+    private Long cityId;
 
 
 
+    @JsonCreator // JSON <-> Java 객체 변환
     @Builder
-    public TravelPlanRequest(LocalDate startDate, LocalDate endDate, String  nation, String city) {
+//    @JsonProperty : JSON 데이터에서 필드를 가리킴
+    public TravelPlanRequest(
+            @JsonProperty("countryId") @NotNull Long countryId,
+            @JsonProperty("cityId") @NotNull Long cityId,
+            @JsonProperty("startDate") @NotNull @FutureOrPresent LocalDate startDate,
+            @JsonProperty("endDate") @NotNull @FutureOrPresent LocalDate endDate) {
+        this.countryId = countryId;
+        this.cityId = cityId;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.nation = nation;
-        this.city = city;
     }
 
 
     /**
      * 여행 일정 생성시 사용
-     * @return : TravelPlan으로 가공된 값
+     * @return : TravelPlanRequest으로 가공된 값
      */
-    public  TravelPlan toTravelPlan() {
-        return TravelPlan.builder()
+    public static TravelPlanRequest toTravelPlan(LocalDate startDate, LocalDate endDate, Long countryId, Long cityId) {
+        return TravelPlanRequest.builder()
                 .startDate(startDate)
                 .endDate(endDate)
-                .nation(nation)
-                .city(city)
+                .countryId(countryId)
+                .cityId(cityId)
                 .build();
     }
 }

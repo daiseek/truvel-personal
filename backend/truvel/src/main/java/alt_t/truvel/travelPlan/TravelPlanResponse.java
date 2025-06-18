@@ -22,22 +22,22 @@ public class TravelPlanResponse {
     private LocalDate endDate;
 
     @NotNull
-    private String nation;
+    private String countryName;
 
     @NotNull
-    private String city;
+    private String cityName;
 
 
     @Builder
     public TravelPlanResponse(String message, Long travelPlanId,
                               LocalDate startDate, LocalDate endDate,
-                              String nation, String city) {
+                              String countryName, String cityName) {
         this.message = message;
         this.travelPlanId = travelPlanId;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.nation = nation;
-        this.city = city;
+        this.countryName = countryName;
+        this.cityName = cityName;
     }
 
 
@@ -59,14 +59,14 @@ public class TravelPlanResponse {
      */
     public static TravelPlanResponse toTravelPlan(String  message, Long travelPlanId,
                                                   LocalDate startDate, LocalDate endDate,
-                                                  String nation, String city) {
+                                                  String countryName, String cityName) { // 파라미터 이름 변경
         return TravelPlanResponse.builder()
                 .message(message)
                 .travelPlanId(travelPlanId)
                 .startDate(startDate)
                 .endDate(endDate)
-                .nation(nation)
-                .city(city)
+                .countryName(countryName)
+                .cityName(cityName)
                 .build();
     }
 
@@ -76,19 +76,19 @@ public class TravelPlanResponse {
      * @param travelPlanId : DB에 저장된 여행 일정의 아이디
      * @param startDate : 여행 일정 시작날
      * @param endDate : 여행 일정 끝나는 날
-     * @param nation : 여행할 국가
-     * @param city : 여행할 도시
+     * @param countryName : 여행할 국가
+     * @param cityName : 여행할 도시
      * @return : 매개변수들을 묶어서 반환
      */
     public static TravelPlanResponse toTravelPlanList( Long travelPlanId,
                                                        LocalDate startDate, LocalDate endDate,
-                                                       String nation, String city) {
+                                                       String countryName, String cityName) { // 파라미터 이름 변경
         return TravelPlanResponse.builder()
                 .travelPlanId(travelPlanId)
                 .startDate(startDate)
                 .endDate(endDate)
-                .nation(nation)
-                .city(city)
+                .countryName(countryName)
+                .cityName(cityName)
                 .build();
     }
 
