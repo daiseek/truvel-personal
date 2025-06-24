@@ -1,10 +1,9 @@
 package alt_t.truvel.searchCountryAndCity.dto;
 
-import alt_t.truvel.searchCountryAndCity.entity.Country;
+import alt_t.truvel.searchCountryAndCity.domain.entity.Country;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
 
 @Getter
 @NoArgsConstructor

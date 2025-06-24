@@ -1,9 +1,14 @@
 package alt_t.truvel.travelPlan;
 
-import alt_t.truvel.searchCountryAndCity.entity.City;
-import alt_t.truvel.searchCountryAndCity.repository.CityRepository;
-import alt_t.truvel.searchCountryAndCity.entity.Country;
-import alt_t.truvel.searchCountryAndCity.repository.CountryRepository;
+import alt_t.truvel.searchCountryAndCity.domain.entity.City;
+import alt_t.truvel.searchCountryAndCity.domain.entity.repository.CityRepository;
+import alt_t.truvel.searchCountryAndCity.domain.entity.Country;
+import alt_t.truvel.searchCountryAndCity.domain.repository.CountryRepository;
+import alt_t.truvel.travelPlan.domain.entity.TravelPlan;
+import alt_t.truvel.travelPlan.domain.repository.TravelPlanRepository;
+import alt_t.truvel.travelPlan.dto.TravelPlanRequest;
+import alt_t.truvel.travelPlan.dto.TravelPlanResponse;
+import alt_t.truvel.travelPlan.service.TravelPlanService;
 import alt_t.truvel.user.User;
 import alt_t.truvel.user.UserRepository;
 import org.junit.jupiter.api.AfterEach;

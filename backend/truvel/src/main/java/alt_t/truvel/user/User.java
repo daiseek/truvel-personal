@@ -1,6 +1,6 @@
 package alt_t.truvel.user;
 
-import alt_t.truvel.travelPlan.TravelPlan;
+import alt_t.truvel.travelPlan.domain.entity.TravelPlan;
 import jakarta.persistence.*;
 import lombok.*;
 

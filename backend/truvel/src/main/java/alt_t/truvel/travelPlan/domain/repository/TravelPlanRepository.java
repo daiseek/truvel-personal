@@ -1,5 +1,6 @@
-package alt_t.truvel.travelPlan;
+package alt_t.truvel.travelPlan.domain.repository;
 
+import alt_t.truvel.travelPlan.domain.entity.TravelPlan;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

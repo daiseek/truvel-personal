@@ -1,15 +1,12 @@
 package alt_t.truvel.daySchedule;
 
 import alt_t.truvel.location.Location;
-import alt_t.truvel.travelPlan.TravelPlan;
+import alt_t.truvel.travelPlan.domain.entity.TravelPlan;
 import jakarta.persistence.*;
 import lombok.Getter;
-import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Date;
 
 /**
  * TravelPlan에 연관관계를 맺기 위한 임시용 엔티티입니다!!

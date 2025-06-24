@@ -1,4 +1,4 @@
-package alt_t.truvel.travelPlan;
+package alt_t.truvel.travelPlan.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

@@ -1,12 +1,12 @@
 package alt_t.truvel.searchCountryAndCity.service;
 
 
-import alt_t.truvel.searchCountryAndCity.repository.CityRepository;
-import alt_t.truvel.searchCountryAndCity.repository.CountryRepository;
+import alt_t.truvel.searchCountryAndCity.domain.repository.CityRepository;
+import alt_t.truvel.searchCountryAndCity.domain.repository.CountryRepository;
 import alt_t.truvel.searchCountryAndCity.dto.CountrySearchResponse;
 import alt_t.truvel.searchCountryAndCity.dto.CitySearchResponse;
-import alt_t.truvel.searchCountryAndCity.entity.City;
-import alt_t.truvel.searchCountryAndCity.entity.Country;
+import alt_t.truvel.searchCountryAndCity.domain.entity.City;
+import alt_t.truvel.searchCountryAndCity.domain.entity.Country;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

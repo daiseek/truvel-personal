@@ -1,5 +1,6 @@
-package alt_t.truvel.travelPlan;
+package alt_t.truvel.travelPlan.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
@@ -7,6 +8,7 @@ import lombok.Getter;
 
 import java.time.LocalDate;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter
 public class TravelPlanResponse {
 

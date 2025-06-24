@@ -1,7 +1,8 @@
-package alt_t.truvel.travelPlan;
+package alt_t.truvel.travelPlan.controller;
 
-import jakarta.validation.Valid;
-import lombok.Getter;
+import alt_t.truvel.travelPlan.dto.TravelPlanRequest;
+import alt_t.truvel.travelPlan.dto.TravelPlanResponse;
+import alt_t.truvel.travelPlan.service.TravelPlanService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

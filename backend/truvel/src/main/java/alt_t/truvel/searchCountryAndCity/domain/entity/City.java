@@ -1,4 +1,4 @@
-package alt_t.truvel.searchCountryAndCity.entity;
+package alt_t.truvel.searchCountryAndCity.domain.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

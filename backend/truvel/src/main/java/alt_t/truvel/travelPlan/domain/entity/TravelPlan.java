@@ -1,9 +1,9 @@
-package alt_t.truvel.travelPlan;
+package alt_t.truvel.travelPlan.domain.entity;
 
 import alt_t.truvel.daySchedule.DaySchedule;
 import alt_t.truvel.location.Location;
-import alt_t.truvel.searchCountryAndCity.entity.City;
-import alt_t.truvel.searchCountryAndCity.entity.Country;
+import alt_t.truvel.searchCountryAndCity.domain.entity.City;
+import alt_t.truvel.searchCountryAndCity.domain.entity.Country;
 import alt_t.truvel.user.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -26,11 +26,17 @@ public class TravelPlan {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "country_id", nullable = false)
-    private Country nation;
+    private Country nationId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "city_id", nullable = false)
-    private City city;
+    private City cityId;
+
+    @Column(name = "city", nullable = false)
+    private String cityName;
+
+    @Column(name = "nation", nullable = false)
+    private String nationName;
 
     @Column
     private LocalDate startDate;
@@ -56,12 +62,15 @@ public class TravelPlan {
 
 
     // 생성자
-    public TravelPlan(Long id, Country nation, LocalDate startDate, LocalDate endDate, City city) {
+    public TravelPlan(Long id, Country nationId, LocalDate startDate, LocalDate endDate, City cityId,
+                      String cityName, String nationName) {
         this.id = id;
-        this.nation = nation;
-        this.city = city;
+        this.nationId = nationId;
+        this.cityId = cityId;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.cityName = cityName;
+        this.nationName = nationName;
     }
 
 

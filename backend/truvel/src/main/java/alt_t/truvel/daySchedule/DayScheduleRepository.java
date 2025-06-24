@@ -1,6 +1,6 @@
 package alt_t.truvel.daySchedule;
 
-import alt_t.truvel.travelPlan.TravelPlan;
+import alt_t.truvel.travelPlan.domain.entity.TravelPlan;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

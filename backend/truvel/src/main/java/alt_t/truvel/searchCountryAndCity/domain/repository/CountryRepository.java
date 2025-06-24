@@ -1,6 +1,6 @@
-package alt_t.truvel.searchCountryAndCity.repository;
+package alt_t.truvel.searchCountryAndCity.domain.repository;
 
-import alt_t.truvel.searchCountryAndCity.entity.Country;
+import alt_t.truvel.searchCountryAndCity.domain.entity.Country;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
