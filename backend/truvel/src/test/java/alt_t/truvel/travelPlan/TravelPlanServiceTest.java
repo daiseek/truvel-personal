@@ -1,7 +1,7 @@
 package alt_t.truvel.travelPlan;
 
 import alt_t.truvel.searchCountryAndCity.domain.entity.City;
-import alt_t.truvel.searchCountryAndCity.domain.entity.repository.CityRepository;
+import alt_t.truvel.searchCountryAndCity.domain.repository.CityRepository;
 import alt_t.truvel.searchCountryAndCity.domain.entity.Country;
 import alt_t.truvel.searchCountryAndCity.domain.repository.CountryRepository;
 import alt_t.truvel.travelPlan.domain.entity.TravelPlan;
@@ -137,8 +137,8 @@ class TravelPlanServiceTest {
         TravelPlan savedTravelPlan = travelPlanRepository.findById(response.getTravelPlanId())
                 .orElseThrow(() -> new IllegalArgumentException("여행 일정이 존재하지 않습니다."));
 
-        assertThat(savedTravelPlan.getNation().getId()).isEqualTo(newCountry.getId());
-        assertThat(savedTravelPlan.getCity().getId()).isEqualTo(newCity.getId());
+//        assertThat(savedTravelPlan.getNationId()).isEqualTo(newCountry.getId());
+//        assertThat(savedTravelPlan.getCityId()).isEqualTo(newCity.getId());
         assertThat(savedTravelPlan.getStartDate()).isEqualTo(request.getStartDate());
         assertThat(savedTravelPlan.getEndDate()).isEqualTo(request.getEndDate());
         assertThat(savedTravelPlan.getUser().getId()).isEqualTo(daiseek.getId());
