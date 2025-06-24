@@ -242,7 +242,7 @@ const TravelDatePicker: React.FC<CalendarProps> = ({
               {/* 요일 헤더 */}
               <S.WeekDaysGrid>
                 {weekDays.map((day: WeekDay, dayIndex: number) => (
-                  <S.WeekDayCell key={day}>
+                  <S.WeekDayCell key={dayIndex}>
                     <S.WeekDayText $dayIndex={dayIndex}>{day}</S.WeekDayText>
                   </S.WeekDayCell>
                 ))}
