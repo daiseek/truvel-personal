@@ -4,7 +4,7 @@ import alt_t.truvel.daySchedule.DaySchedule;
 import alt_t.truvel.location.Location;
 import alt_t.truvel.searchCountryAndCity.domain.entity.City;
 import alt_t.truvel.searchCountryAndCity.domain.entity.Country;
-import alt_t.truvel.user.User;
+import alt_t.truvel.auth.user.domain.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 

@@ -23,6 +23,15 @@ services:
       - .env
     depends_on:
       - mysql
+      - redis
+
+  redis:
+    container_name: truvel-redis
+    image: "redis:7" # redis 버전 명시
+    ports:
+      - "16379:6379"
+    command: ["redis-server", "--bind", "0.0.0.0", "--port", "6379"]
+
 
 volumes:
   mysql-data:

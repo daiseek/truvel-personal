@@ -1,4 +1,4 @@
-package alt_t.truvel.user;
+package alt_t.truvel.auth.user.domain.entity;
 
 import alt_t.truvel.travelPlan.domain.entity.TravelPlan;
 import jakarta.persistence.*;
@@ -7,10 +7,7 @@ import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * TravelPlan에 연관관계를 맺기 위한 임시용 엔티티입니다!!
- * 추후에 User엔티티가 완성되었을때 제거해주세요!!
- */
+
 @Entity
 @Getter
 @Builder
@@ -23,7 +20,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(unique = true)
     private String email;
 
     @Column
@@ -35,8 +32,26 @@ public class User {
     @Column
     private String profileImg;
 
-    @Column
-    private byte locationConsent;
+    @Column(nullable = false)
+    @Builder.Default
+    private Boolean locationConsent = false;
+
+//    @Column(nullable = true)
+//    private boolean over14; // 만 14세 이상인가?
+
+    @Column(nullable = true)
+    @Builder.Default
+    private Boolean agreeTerms = false; // 서비스 이용약관 동의
+
+    @Column(nullable = true)
+    @Builder.Default
+    private Boolean agreePrivacy = false; // 개인정보 수집 및 이용 동의
+
+
+    @Column(nullable = false)
+    @Builder.Default
+    private Boolean agreeThirdParty = false; // 제3자 개인정보 제공 동의
+
 
     @Builder.Default
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
