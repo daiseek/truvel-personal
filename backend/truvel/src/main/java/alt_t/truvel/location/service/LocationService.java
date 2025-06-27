@@ -32,14 +32,15 @@ public class LocationService {
                     .longitude(dto.getLongitude())
                     .address(dto.getAddress())
                     .build();
-            locationRepository.save(location);
+
+            Location saved = locationRepository.save(location);
 
             return LocationResponseDto.builder()
-                    .locationId(location.getId())
-                    .place(location.getPlace())
-                    .latitude(location.getLatitude())
-                    .longitude(location.getLongitude())
-                    .address(location.getAddress())
+                    .locationId(saved.getId()) // 이제 null 아님
+                    .place(saved.getPlace())
+                    .latitude(saved.getLatitude())
+                    .longitude(saved.getLongitude())
+                    .address(saved.getAddress())
                     .build();
         }).toList();
     }
