@@ -37,7 +37,9 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 
     // 허용 경로
     private static final String[] AGREE_PATHS = {
+            "/error",
             "/auth/**",
+            "/emails/**",
 //            "/auth/signup",
 //            "/auth/login",
             "/swagger-resources/**",

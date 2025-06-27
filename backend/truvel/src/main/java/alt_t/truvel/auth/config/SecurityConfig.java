@@ -57,6 +57,9 @@ public class SecurityConfig {
                                         .requestMatchers("/v3/api-docs/**").permitAll()
                                         // 4. Swagger UI 관련 경로 명시적 허용
                                         .requestMatchers("/swagger-ui/**").permitAll()
+                                        // 5. 이메일 인증 기능은 허용
+                                        .requestMatchers("/emails/**").permitAll()
+                                        .requestMatchers("/error").permitAll()
 //                                .requestMatchers("/swagger-ui.html").permitAll() // swagger-ui.html 직접 접근 시
                                         // 5. 조회 API는 비로그인 유저도 접근 가능 (예시)
 //                                .requestMatchers(HttpMethod.GET, "/api/post/**").permitAll()
