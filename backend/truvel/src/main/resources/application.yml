@@ -8,8 +8,23 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   data:
     redis:
-      host: truvel-redis
-      port: 6379
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${GMAIL_ADDRESS}
+    password: ${GOOGLE_APP_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+        debug: false
+        transport:
+          protocol: smtp
+  default-encoding: UTF-8
 
   jpa:
     hibernate:
