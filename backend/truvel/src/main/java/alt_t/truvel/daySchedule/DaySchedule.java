@@ -1,6 +1,6 @@
 package alt_t.truvel.daySchedule;
 
-import alt_t.truvel.location.Location;
+import alt_t.truvel.location.domain.entity.Location;
 import alt_t.truvel.travelPlan.TravelPlan;
 import jakarta.persistence.*;
 import lombok.Getter;
