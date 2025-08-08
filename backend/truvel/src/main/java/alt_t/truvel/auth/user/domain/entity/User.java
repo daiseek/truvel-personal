@@ -1,6 +1,7 @@
 package alt_t.truvel.auth.user.domain.entity;
 
 import alt_t.truvel.auth.emailVerification.domain.entity.EmailVerification;
+import alt_t.truvel.editor.domain.entity.Editor;
 import alt_t.truvel.travelPlan.domain.entity.TravelPlan;
 import jakarta.persistence.*;
 import lombok.*;
@@ -27,7 +28,7 @@ public class User {
     @Column
     private String password;
 
-    @Column
+    @Column(unique = true)
     private String nickname;
 
     @Column
@@ -57,6 +58,7 @@ public class User {
     @Builder.Default
     private Boolean emailVerified = false; // 이메일 인증 여부, 기본값으로 false 설정
 
+    @Builder.Default
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<EmailVerification> emailVerifications = new ArrayList<>();
 
@@ -64,6 +66,10 @@ public class User {
     @Builder.Default
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TravelPlan> travelPlans = new ArrayList<>();
+
+    @Builder.Default
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Editor> editors = new ArrayList<>();
 
     public void setTravelPlan(TravelPlan travelPlan) {
     }
@@ -80,6 +86,11 @@ public class User {
 
     public void setEmailVerified(boolean emailVerified) {
         this.emailVerified = emailVerified;
+    }
+
+    public void addEditor(Editor editor) {
+        this.editors.add(editor);
+        editor.setUser(this);
     }
 
 
