@@ -3,14 +3,15 @@ package alt_t.truvel.auth.emailVerification.domain.entity;
 
 import alt_t.truvel.auth.user.domain.entity.User;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Builder
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class EmailVerification {
 
     @Id
