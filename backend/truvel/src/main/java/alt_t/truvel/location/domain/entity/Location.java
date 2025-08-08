@@ -28,5 +28,13 @@ public class Location {
         this.travelPlan = travelPlan;
     }
 
+    public Location(Long id, String place, Float latitude, Float longitude, String address) {
+        this.id = id;
+        this.place = place;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.address = address;
+    }
+
 
 }

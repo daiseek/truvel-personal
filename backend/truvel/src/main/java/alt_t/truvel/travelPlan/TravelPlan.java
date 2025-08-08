@@ -1,7 +1,7 @@
 package alt_t.truvel.travelPlan;
 
 import alt_t.truvel.daySchedule.DaySchedule;
-import alt_t.truvel.location.Location;
+import alt_t.truvel.location.domain.entity.Location;
 import alt_t.truvel.user.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -55,7 +55,7 @@ public class TravelPlan {
     @OneToMany(mappedBy = "travelPlan", cascade = CascadeType.ALL)
     private List<DaySchedule> daySchedules = new ArrayList<>();
 
-
+    @Builder.Default
     @OneToMany(mappedBy = "travelPlan", cascade = CascadeType.ALL)
     private List<Location> locations = new ArrayList<>();
 

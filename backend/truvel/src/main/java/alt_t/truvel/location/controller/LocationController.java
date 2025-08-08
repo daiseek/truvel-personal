@@ -25,4 +25,11 @@ public class LocationController {
         return ResponseEntity.ok(results);
     }
 
+    //장소 저장
+    @PostMapping
+    public ResponseEntity<List<LocationResponseDto>> saveMultipleLocations(@RequestBody List<LocationSaveRequestDto> dtos) {
+        List<LocationResponseDto> responseDtos = locationService.saveSelectedPlaces(dtos);
+        return ResponseEntity.status(201).body(responseDtos);
+    }
+
 }
