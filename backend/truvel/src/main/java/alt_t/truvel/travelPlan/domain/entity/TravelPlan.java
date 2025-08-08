@@ -1,6 +1,7 @@
 package alt_t.truvel.travelPlan.domain.entity;
 
 import alt_t.truvel.daySchedule.DaySchedule;
+import alt_t.truvel.editor.domain.entity.Editor;
 import alt_t.truvel.location.Location;
 import alt_t.truvel.searchCountryAndCity.domain.entity.City;
 import alt_t.truvel.searchCountryAndCity.domain.entity.Country;
@@ -60,6 +61,10 @@ public class TravelPlan {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Builder.Default
+    @OneToMany(mappedBy = "travelPlan", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Editor> editors = new ArrayList<>();
+
 
     // 생성자
     public TravelPlan(Long id, Country nationId, LocalDate startDate, LocalDate endDate, City cityId,
@@ -98,6 +103,13 @@ public class TravelPlan {
 
     // 사용자를 설정하는 메서드
     public void setUser(User user) {
+        this.user = user;
+    }
+
+    // 편집자 추가 메서드
+    public void addEditor(Editor editor) {
+        this.editors.add(editor);
+        editor.setTravelPlan(this);
     }
 
 
