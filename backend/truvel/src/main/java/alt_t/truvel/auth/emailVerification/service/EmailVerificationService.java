@@ -21,10 +21,13 @@ public class EmailVerificationService {
     private static final int CODE_EXPIRATION = 10;
 
 
-
+    /**
+     * 이메일 인증 코드 발송
+     * @param email : 사용자가 입력한 이메일 주소
+     */
     public void sendVerificationCode(String email) {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
+                .orElseThrow(() -> new RuntimeException("존재하지 않는 사용자입니다."));
 
         // 최근 인증 요청 조회
         Optional<EmailVerification> latestRequest = verificationRepository
@@ -62,6 +65,11 @@ public class EmailVerificationService {
         );
     }
 
+    /**
+     * 인증 코드 확인
+     * @param email : 사용자가 입력한 이메일
+     * @param code : 사용자가 입력한 인증 코드
+     */
     public void verifyCode(String email, String code) {
         EmailVerification verification = verificationRepository
                 .findByEmailAndCodeAndUsedFalse(email, code)
@@ -79,6 +87,10 @@ public class EmailVerificationService {
         userRepository.save(user);
     }
 
+    /**
+     * 이메일 인증 코드 생성
+     * @return : 생성된 인증 코드
+     */
     private String generateCode() {
         int code = (int)(Math.random() * 900000) + 100000;
         return String.valueOf(code); // 6자리 숫자

@@ -8,8 +8,8 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Builder
 @Getter
+@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class EmailVerification {
