@@ -34,5 +34,4 @@ public class TravelPlanService {
 
         return new TravelPlanDataResponse("여행 날짜 저장 완료", savedTravelPlan.getId());
     }
-
 }

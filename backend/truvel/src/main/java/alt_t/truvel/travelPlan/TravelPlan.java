@@ -3,6 +3,7 @@ package alt_t.truvel.travelPlan;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
@@ -10,7 +11,8 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @AllArgsConstructor
-@Table(name="TravelPlan")
+@Table(name="travel_plan")
+@NoArgsConstructor
 public class TravelPlan {
 
     @Id
