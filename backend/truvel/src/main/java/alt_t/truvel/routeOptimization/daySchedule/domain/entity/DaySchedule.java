@@ -2,6 +2,8 @@ package alt_t.truvel.routeOptimization.daySchedule.domain.entity;
 
 import alt_t.truvel.routeOptimization.daySchedule.dayScheduleDTO.requset.DayScheduleRequest;
 import alt_t.truvel.travelPlan.TravelPlan;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -27,6 +29,7 @@ public class DaySchedule {
     // 여행 일정 id 외래키
     @ManyToOne
     @JoinColumn(name = "travel_plan_id", nullable = false)
+    @JsonBackReference
     private TravelPlan travelPlan;
 
     @ManyToOne
@@ -48,6 +51,7 @@ public class DaySchedule {
     private String dayScheduleMemo;  // 일정 메모
 
     @OneToMany(mappedBy = "daySchedule", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Schedule> schedules;
 
     // id 입력 x

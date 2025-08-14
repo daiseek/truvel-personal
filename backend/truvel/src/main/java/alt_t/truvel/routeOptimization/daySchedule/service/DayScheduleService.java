@@ -28,20 +28,20 @@ import java.util.NoSuchElementException;
 public class DayScheduleService {
     private final DayScheduleRepository dayScheduleRepository;
     private final TravelPlanRepository travelPlanRepository;
-    private final ScheduleService scheduleService;
     private final LocationRepository locationRepository;
+    private final ScheduleRepository scheduleRepository;
 
     // Response 객체에서 최적화된 일정을 부르기 위한 함수
     public DayScheduleResponse getOptimizationDaySchedule(Long travel_plan_id, DayScheduleRequest dayScheduleRequest){
         // 컨트롤러에서 받은 요청값들 daySchedule 객체로 변환
-        TravelPlan travelPlan = travelPlanRepository.findById(travel_plan_id).orElseThrow();
+        TravelPlan travelPlan = travelPlanRepository.findById(travel_plan_id).orElseThrow(() ->
+                new NoSuchElementException("No such travel plan with id: " + travel_plan_id));
 
         // 일별 일정 생성
         DaySchedule daySchedule = createDaySchedule(travelPlan, dayScheduleRequest);
 
         // daySchedule에 대한 일정 최적화
-        List<Schedule> schedules = RouteOptimization.optimization(daySchedule.getSchedules(), daySchedule);
-        daySchedule.updateSchedules(schedules);
+        daySchedule.updateSchedules(RouteOptimization.optimization(daySchedule.getSchedules(), daySchedule));
         return new DayScheduleResponse(daySchedule);
     }
 
@@ -58,14 +58,42 @@ public class DayScheduleService {
         );
 
         DaySchedule daySchedule = saveDaySchedule(DaySchedule.of(travelPlan, dayScheduleRequest,startLocation,endLocation));
-        scheduleService.createSchedule(daySchedule, dayScheduleRequest.getSchedules());
+        createSchedules(daySchedule, dayScheduleRequest.getSchedules());
         return daySchedule;
+    }
+
+    // Schedule 생성 로직을 DayScheduleService로 이동
+    private List<Schedule> createSchedules(DaySchedule daySchedule, List<ScheduleRequest> scheduleRequests){
+        List<Schedule> schedules = new ArrayList<>();
+        scheduleRequests.forEach(scheduleRequest -> {
+            Location location = locationRepository.findByName(scheduleRequest.getLocationName())
+                    .orElseThrow(() -> new NoSuchElementException(scheduleRequest.getLocationName() + "를 찾을 수 없습니다."));
+
+            // 중복 체크: 이미 같은 daySchedule, location 조합이 있는지 확인
+            boolean exists = scheduleRepository.existsByDayScheduleAndLocation(daySchedule, location);
+            if (exists) {
+                throw new IllegalArgumentException("이미 등록된 일정입니다: " + location.getName());
+            }
+
+            Schedule schedule = Schedule.of(daySchedule, scheduleRequest, location);
+            
+            // stayTime이 비어있으면 category에 맞춰 자동으로 stayTime을 설정
+            if (schedule.getStayTime() == null){
+                schedule.updateStayTime(schedule.getLocation().getCategory().getStayTime());
+            }
+            
+            schedules.add(schedule);
+        });
+
+        daySchedule.updateSchedules(schedules);
+        return scheduleRepository.saveAll(schedules);
     }
 
     // 기본적인 save 함수
     public DaySchedule saveDaySchedule(DaySchedule daySchedule){
         return dayScheduleRepository.save(daySchedule);
     }
+    
     // 기본적인 update 함수
     public void updateDaySchedule(Long id, DayScheduleRequest dayScheduleRequest){
         DaySchedule daySchedule = dayScheduleRepository.findById(id).orElseThrow();

@@ -22,20 +22,26 @@ public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
     private final LocationRepository locationRepository;
 
-    public List<Schedule> createSchedule(DaySchedule daySchedule, List<ScheduleRequest> scheduleRequest){
+    public List<Schedule> createSchedule(DaySchedule daySchedule, List<ScheduleRequest> scheduleRequests){
         List<Schedule> schedules = new ArrayList<>();
-        scheduleRequest.forEach(scheduleRequest1 -> {
-            // 장소 추가에서 저장되어 있는 location을 이름으로 검색해서 가져옴
-            Location location = locationRepository.findByName(scheduleRequest1.getLocationName())
-                    .orElseThrow(() -> new NoSuchElementException(scheduleRequest1.getLocationName()+"를 찾을 수 없습니다."));
+        scheduleRequests.forEach(scheduleRequest -> {
+            Location location = locationRepository.findByName(scheduleRequest.getLocationName())
+                    .orElseThrow(() -> new NoSuchElementException(scheduleRequest.getLocationName() + "를 찾을 수 없습니다."));
 
-            schedules.add(Schedule.of(daySchedule, scheduleRequest1,location));
+            // 중복 체크: 이미 같은 daySchedule, location 조합이 있는지 확인
+            boolean exists = scheduleRepository.existsByDayScheduleAndLocation(daySchedule, location);
+            if (exists) {
+                // 필요에 따라 예외 발생 또는 건너뛰기
+                throw new IllegalArgumentException("이미 등록된 일정입니다: " + location.getName());
+                // 또는 return; 으로 건너뛰기
+            }
+
+            schedules.add(Schedule.of(daySchedule, scheduleRequest, location));
         });
-        // schedules의 stayTime 초기화
+
         setStayTime(schedules);
-        // 매핑되어있는 daySchedule 에도 update
         daySchedule.updateSchedules(schedules);
-        // 생성한 객체 db에 저장
+
         return scheduleRepository.saveAll(schedules);
     }
 
@@ -47,5 +53,4 @@ public class ScheduleService {
             }
         });
     }
-
 }

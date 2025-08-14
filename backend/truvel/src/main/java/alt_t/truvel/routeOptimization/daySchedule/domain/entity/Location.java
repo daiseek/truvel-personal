@@ -2,6 +2,7 @@ package alt_t.truvel.routeOptimization.daySchedule.domain.entity;
 
 import alt_t.truvel.routeOptimization.daySchedule.enums.PlaceCategory;
 import alt_t.truvel.travelPlan.TravelPlan;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -20,6 +21,7 @@ public class Location {
 
     @ManyToOne
     @JoinColumn(name = "travel_plan_id")
+    @JsonBackReference
     private TravelPlan travelPlan;
 
     @NotNull

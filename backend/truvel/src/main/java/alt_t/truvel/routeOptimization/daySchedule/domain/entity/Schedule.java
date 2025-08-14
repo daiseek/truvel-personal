@@ -2,6 +2,7 @@ package alt_t.truvel.routeOptimization.daySchedule.domain.entity;
 
 import alt_t.truvel.routeOptimization.daySchedule.enums.PreferTime;
 import alt_t.truvel.routeOptimization.daySchedule.dayScheduleDTO.requset.ScheduleRequest;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,6 +23,7 @@ public class Schedule {
 
     @ManyToOne
     @JoinColumn(name = "day_schedule_id", nullable = false)
+    @JsonBackReference
     private DaySchedule daySchedule;
 
     @OneToOne

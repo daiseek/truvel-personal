@@ -8,58 +8,58 @@ import alt_t.truvel.routeOptimization.daySchedule.enums.PreferTime;
 import jakarta.validation.constraints.Null;
 
 import java.time.LocalTime;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
 public class RouteOptimization {
-    private static LocalTime MorningEndTime;
-    private static LocalTime AfternoonEndTime;
-    private static LocalTime EveningEndTime;
-    private static List<Schedule> results = new ArrayList<>();
-    static List<Schedule> morningSchedule = new ArrayList<>();
-    static List<Schedule> afternoonSchedule = new ArrayList<>();
-    static List<Schedule> eveningSchedule = new ArrayList<>();
-    static List<Schedule> randomSchedule = new ArrayList<>();
+
     // 경로 최적화
     public static List<Schedule> optimization(List<Schedule> schedules, DaySchedule daySchedule){
+        List<Schedule> morningSchedule = new ArrayList<>();
+        List<Schedule> afternoonSchedule = new ArrayList<>();
+        List<Schedule> eveningSchedule = new ArrayList<>();
+        List<Schedule> randomSchedule = new ArrayList<>();
+        List<Schedule> results = new ArrayList<>();
+
+        // 각 시간대별 총 소요 시간 계산
+        LocalTime morningEndTime = LocalTime.of(8, 0); // 아침 시작 시간
+        LocalTime afternoonEndTime = LocalTime.of(12, 0); // 점심 시작 시간
+        LocalTime eveningEndTime = LocalTime.of(17, 0); // 저녁 시작 시간
 
         // 가고싶은 시간대에 따라 분류해서 List에 넣어둠
-        schedules.forEach(schedule -> {
+        for (Schedule schedule : schedules) {
             switch (schedule.getPreferTime()){
                 case Morning -> {
                     morningSchedule.add(schedule);
-                    MorningEndTime = MorningEndTime.plusHours(schedule.getStayTime().toHours());
-                    MorningEndTime = MorningEndTime.plusMinutes(schedule.getStayTime().toMinutes());
+                    morningEndTime = morningEndTime.plus(schedule.getStayTime());
                 }
                 case Afternoon -> {
                     afternoonSchedule.add(schedule);
-                    AfternoonEndTime = AfternoonEndTime.plusHours(schedule.getStayTime().toHours());
-                    AfternoonEndTime = AfternoonEndTime.plusMinutes(schedule.getStayTime().toMinutes());
+                    afternoonEndTime = afternoonEndTime.plus(schedule.getStayTime());
                 }
                 case Evening -> {
                     eveningSchedule.add(schedule);
-                    EveningEndTime = EveningEndTime.plusHours(schedule.getStayTime().toHours());
-                    EveningEndTime = EveningEndTime.plusMinutes(schedule.getStayTime().toMinutes());
+                    eveningEndTime = eveningEndTime.plus(schedule.getStayTime());
                 }
                 case Random -> randomSchedule.add(schedule);
             }
-        });
-
+        }
+        
         // 각 List를 마지막 행선지에 대한 최소비용 알고리즘으로 정렬
         sortSchedule(daySchedule, morningSchedule, "morning");
         sortSchedule(daySchedule, afternoonSchedule, "afternoon");
         sortSchedule(daySchedule, eveningSchedule, "evening");
 
         // randomSchedule의 스케줄들을 위치 기반 최단거리 알고리즘으로 분류
-        randomSchedule.forEach(schedule -> {
+        for (Schedule schedule : randomSchedule) {
             addScheduleToNearestTimeSlot(schedule, morningSchedule, afternoonSchedule, eveningSchedule, daySchedule);
-        });
-
+        }
+        
         // 모든 스케줄을 results에 합치기
         results.addAll(morningSchedule);
         results.addAll(afternoonSchedule);
         results.addAll(eveningSchedule);
-
         return results;
     }
 
@@ -71,8 +71,7 @@ public class RouteOptimization {
         Location currentLocation;
         switch (timeSlot){
             case "morning" -> currentLocation = daySchedule.getStartLocation();
-            case "afternoon" -> currentLocation = morningSchedule.isEmpty() ? daySchedule.getStartLocation() : morningSchedule.get(morningSchedule.size() - 1).getLocation();
-            case "evening" -> currentLocation = afternoonSchedule.isEmpty() ? daySchedule.getStartLocation() : afternoonSchedule.get(afternoonSchedule.size() - 1).getLocation();
+            case "afternoon", "evening" -> currentLocation = schedules.get(schedules.size() - 1).getLocation();
             default -> throw new RouteOptException("알 수 없는 시간대: " + timeSlot);
         }
 
@@ -94,6 +93,7 @@ public class RouteOptimization {
 
         // 기존 리스트에 정렬된 결과 반영
         schedules.clear();
+        System.out.println("Sorted " + timeSlot + " schedules: " + sorted);
         schedules.addAll(sorted);
     }
     
@@ -107,58 +107,44 @@ public class RouteOptimization {
         
         double minDistance = Double.MAX_VALUE;
         String nearestTimeSlot = "morning";
+        
         // 아침 스케줄의 마지막 요소와의 거리 계산
         double distanceToMorning = calculateTotalDistanceForTimeSlot(randomSchedule, morningSchedule, "morning", daySchedule);
-        if (!MorningEndTime.isAfter(PreferTime.MAX_MORNING_TIME.minusMinutes((long)distanceToMorning)) || distanceToMorning < minDistance) {
+        if (distanceToMorning < minDistance) {
             minDistance = distanceToMorning;
             nearestTimeSlot = "morning";
         }
 
         // 점심 스케줄의 마지막 요소와의 거리 계산
         double distanceToAfternoon = calculateTotalDistanceForTimeSlot(randomSchedule, afternoonSchedule, "afternoon", daySchedule);
-        if (!AfternoonEndTime.isAfter(PreferTime.MAX_AFTERNOON_TIME.minusMinutes((long)distanceToAfternoon))|| distanceToAfternoon < minDistance) {
+        if (distanceToAfternoon < minDistance) {
             minDistance = distanceToAfternoon;
             nearestTimeSlot = "afternoon";
         }
 
-
         // 저녁 스케줄의 마지막 요소와의 거리 계산
         double distanceToEvening = calculateTotalDistanceForTimeSlot(randomSchedule, eveningSchedule, "evening", daySchedule);
-        if (!EveningEndTime.isAfter(PreferTime.MAX_EVENING_TIME.minusMinutes((long)distanceToEvening)) || distanceToEvening < minDistance) {
+        if (distanceToEvening < minDistance) {
             minDistance = distanceToEvening;
             nearestTimeSlot = "evening";
         }
         
         // 가장 가까운 시간대에 스케줄 추가
         switch (nearestTimeSlot) {
-            case "morning" -> {
-                    morningSchedule.add(randomSchedule);
-                    MorningEndTime = MorningEndTime.plusHours(randomSchedule.getStayTime().toHours());
-                    MorningEndTime = MorningEndTime.plusMinutes(randomSchedule.getStayTime().toMinutes());
-            }
-            case "afternoon" -> {
-                    afternoonSchedule.add(randomSchedule);
-                    AfternoonEndTime = AfternoonEndTime.plusHours(randomSchedule.getStayTime().toHours());
-                    AfternoonEndTime = AfternoonEndTime.plusMinutes(randomSchedule.getStayTime().toMinutes());
-            }
-            case "evening" -> {
-                    eveningSchedule.add(randomSchedule);
-                    EveningEndTime = EveningEndTime.plusHours(randomSchedule.getStayTime().toHours());
-                    EveningEndTime = EveningEndTime.plusMinutes(randomSchedule.getStayTime().toMinutes());
-            }
+            case "morning" -> morningSchedule.add(randomSchedule);
+            case "afternoon" -> afternoonSchedule.add(randomSchedule);
+            case "evening" -> eveningSchedule.add(randomSchedule);
             default -> {
                 throw new RouteOptException("알 수 없는 시간대: " + nearestTimeSlot);
-                // 여기로 들어오면 오류
             }
         }
     }
     
-   
     /**
      * 특정 시간대에 스케줄을 추가했을 때의 총 거리 계산
      */
     private static double calculateTotalDistanceForTimeSlot(Schedule newSchedule, 
-                                                          List<Schedule> timeSlotSchedule, 
+                                                          List<Schedule> timeSlotSchedule,
                                                           String timeSlot,
                                                           DaySchedule daySchedule) {
         double totalDistance = 0;
@@ -205,7 +191,7 @@ public class RouteOptimization {
                    Math.sin(dLon / 2) * Math.sin(dLon / 2);
         
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        
+
         return R * c;
     }
 }
