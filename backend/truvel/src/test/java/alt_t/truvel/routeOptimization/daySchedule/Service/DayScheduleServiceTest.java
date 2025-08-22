@@ -1,19 +1,15 @@
 package alt_t.truvel.routeOptimization.daySchedule.Service;
 
-import alt_t.truvel.routeOptimization.daySchedule.DayScheduleFixture;
+import alt_t.truvel.location.domain.entity.Location;
+import alt_t.truvel.location.domain.repository.LocationRepository;
 import alt_t.truvel.routeOptimization.daySchedule.dayScheduleDTO.requset.DayScheduleRequest;
 import alt_t.truvel.routeOptimization.daySchedule.dayScheduleDTO.response.DayScheduleResponse;
 import alt_t.truvel.routeOptimization.daySchedule.domain.entity.DaySchedule;
-import alt_t.truvel.routeOptimization.daySchedule.domain.entity.Location;
-import alt_t.truvel.routeOptimization.daySchedule.domain.entity.Schedule;
-import alt_t.truvel.routeOptimization.daySchedule.domain.repository.DayScheduleRepository;
-import alt_t.truvel.routeOptimization.daySchedule.domain.repository.LocationRepository;
-import alt_t.truvel.routeOptimization.daySchedule.enums.PlaceCategory;
+import alt_t.truvel.location.PlaceCategory;
 import alt_t.truvel.routeOptimization.daySchedule.service.DayScheduleService;
 import alt_t.truvel.routeOptimization.daySchedule.service.ScheduleService;
 import alt_t.truvel.travelPlan.TravelPlan;
 import alt_t.truvel.travelPlan.TravelPlanRepository;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -50,9 +46,9 @@ class DayScheduleServiceTest {
         TRAVEL_PLAN = new TravelPlan(null, "한국",
                 LocalDate.of(2025, 6, 16),
                 LocalDate.of(2025, 6, 25),"인천");
-        LOCATION1 = new Location(null, TRAVEL_PLAN,"인천", PlaceCategory.Cafe, 39.20207, 126.40009);
-        LOCATION2 = new Location(null, TRAVEL_PLAN,"서울", PlaceCategory.Restaurant, 30.20207, 121.40009);
-        LOCATION3 = new Location(null, TRAVEL_PLAN,"부산", PlaceCategory.Cafe,32.20207, 120.40009);
+        LOCATION1 = new Location(null, TRAVEL_PLAN,"인천", "address" ,PlaceCategory.CAFE, 39.20207, 126.40009);
+        LOCATION2 = new Location(null, TRAVEL_PLAN,"서울", "address", PlaceCategory.RESTAURANT, 30.20207, 121.40009);
+        LOCATION3 = new Location(null, TRAVEL_PLAN,"부산", "address", PlaceCategory.CAFE,32.20207, 120.40009);
 
         travelPlanRepository.save(TRAVEL_PLAN);
         locationRepository.save(LOCATION1);

@@ -1,14 +1,11 @@
 package alt_t.truvel.routeOptimization.daySchedule.service;
 
 import alt_t.truvel.exception.RouteOptException;
+import alt_t.truvel.location.domain.entity.Location;
 import alt_t.truvel.routeOptimization.daySchedule.domain.entity.DaySchedule;
-import alt_t.truvel.routeOptimization.daySchedule.domain.entity.Location;
 import alt_t.truvel.routeOptimization.daySchedule.domain.entity.Schedule;
-import alt_t.truvel.routeOptimization.daySchedule.enums.PreferTime;
-import jakarta.validation.constraints.Null;
 
 import java.time.LocalTime;
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 

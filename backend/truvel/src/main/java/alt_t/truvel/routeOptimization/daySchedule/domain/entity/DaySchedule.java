@@ -1,5 +1,6 @@
 package alt_t.truvel.routeOptimization.daySchedule.domain.entity;
 
+import alt_t.truvel.location.domain.entity.Location;
 import alt_t.truvel.routeOptimization.daySchedule.dayScheduleDTO.requset.DayScheduleRequest;
 import alt_t.truvel.travelPlan.TravelPlan;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -20,6 +21,7 @@ import static lombok.AccessLevel.PROTECTED;
 @AllArgsConstructor
 @NoArgsConstructor(access = PROTECTED)
 @Table(name = "day_schedule")
+@Setter
 public class DaySchedule {
 
     @Id

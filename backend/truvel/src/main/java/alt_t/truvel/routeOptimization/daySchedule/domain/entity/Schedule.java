@@ -1,5 +1,6 @@
 package alt_t.truvel.routeOptimization.daySchedule.domain.entity;
 
+import alt_t.truvel.location.domain.entity.Location;
 import alt_t.truvel.routeOptimization.daySchedule.enums.PreferTime;
 import alt_t.truvel.routeOptimization.daySchedule.dayScheduleDTO.requset.ScheduleRequest;
 import com.fasterxml.jackson.annotation.JsonBackReference;

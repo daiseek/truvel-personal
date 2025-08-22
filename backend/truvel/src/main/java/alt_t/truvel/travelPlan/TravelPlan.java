@@ -1,7 +1,7 @@
 package alt_t.truvel.travelPlan;
 
-import alt_t.truvel.daySchedule.DaySchedule;
 import alt_t.truvel.location.domain.entity.Location;
+import alt_t.truvel.routeOptimization.daySchedule.domain.entity.DaySchedule;
 import alt_t.truvel.user.User;
 import jakarta.persistence.*;
 import lombok.*;

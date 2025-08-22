@@ -1,13 +1,8 @@
 package alt_t.truvel.routeOptimization.daySchedule;
 
-import alt_t.truvel.routeOptimization.daySchedule.enums.PlaceCategory;
 import alt_t.truvel.routeOptimization.daySchedule.enums.PreferTime;
 import alt_t.truvel.routeOptimization.daySchedule.dayScheduleDTO.requset.DayScheduleRequest;
 import alt_t.truvel.routeOptimization.daySchedule.dayScheduleDTO.requset.ScheduleRequest;
-import alt_t.truvel.routeOptimization.daySchedule.domain.entity.Location;
-import alt_t.truvel.routeOptimization.daySchedule.domain.repository.LocationRepository;
-import alt_t.truvel.travelPlan.TravelPlan;
-import alt_t.truvel.travelPlan.TravelPlanRepository;
 
 import java.time.Duration;
 import java.time.LocalDate;

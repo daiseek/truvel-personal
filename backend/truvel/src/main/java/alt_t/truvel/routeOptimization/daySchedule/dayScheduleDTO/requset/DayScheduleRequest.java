@@ -1,10 +1,6 @@
 package alt_t.truvel.routeOptimization.daySchedule.dayScheduleDTO.requset;
 
-import alt_t.truvel.routeOptimization.daySchedule.domain.entity.Location;
-import alt_t.truvel.routeOptimization.daySchedule.domain.entity.Schedule;
-import alt_t.truvel.travelPlan.TravelPlan;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDate;

@@ -1,6 +1,6 @@
 package alt_t.truvel.routeOptimization.daySchedule.controller;
 
-import alt_t.truvel.routeOptimization.daySchedule.domain.repository.LocationRepository;
+import alt_t.truvel.location.domain.repository.LocationRepository;
 import alt_t.truvel.routeOptimization.daySchedule.service.DayScheduleService;
 import alt_t.truvel.routeOptimization.daySchedule.dayScheduleDTO.requset.DayScheduleRequest;
 import alt_t.truvel.routeOptimization.daySchedule.dayScheduleDTO.response.DayScheduleResponse;
@@ -10,15 +10,10 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 
-import static alt_t.truvel.DayScheduleFixture.*;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @Getter
 @Setter
 @RequiredArgsConstructor
@@ -37,20 +32,15 @@ public class DayScheduleController {
             @RequestBody DayScheduleRequest dayScheduleRequest)
     {
         // 테스트를 위한 코드 travelPlan, location 기능과 merge 할 때 삭제
-        travelPlanRepository.save(TRAVEL_PLAN);
-        locationRepository.save(LOCATION1);
-        locationRepository.save(LOCATION2);
-        locationRepository.save(LOCATION3);
-        // 여기까지
 
         // 경로 최적화된 일별 일정 받아오기
         DayScheduleResponse dayScheduleResponse = dayScheduleService.getOptimizationDaySchedule(travel_plan_id, dayScheduleRequest);
         return ResponseEntity.ok(dayScheduleResponse);
     }
 
-    // 일정 등록하기
-    @PostMapping("/enrollSchedule")
-    public ResponseEntity<String> enrollSchedule(){
-        return ResponseEntity.ok("일정 등록이 완료되었습니다.");
-    }
+//    // 일정 등록하기
+//    @PostMapping("/enrollSchedule")
+//    public ResponseEntity<String> enrollSchedule(){
+//        return ResponseEntity.ok("일정 등록이 완료되었습니다.");
+//    }
 }

@@ -1,6 +1,6 @@
 package alt_t.truvel.routeOptimization.daySchedule.dayScheduleDTO.response;
 
-import alt_t.truvel.routeOptimization.daySchedule.domain.entity.Location;
+import alt_t.truvel.location.domain.entity.Location;
 import alt_t.truvel.routeOptimization.daySchedule.domain.entity.DaySchedule;
 import alt_t.truvel.routeOptimization.daySchedule.domain.entity.Schedule;
 import lombok.Builder;
