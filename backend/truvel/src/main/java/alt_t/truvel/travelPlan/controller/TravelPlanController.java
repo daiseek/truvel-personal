@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RequiredArgsConstructor // 생성자 주입
-@Controller
+@RestController
 public class TravelPlanController {
 
     private final TravelPlanService travelPlanService;

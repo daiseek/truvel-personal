@@ -25,10 +25,13 @@ spring:
         transport:
           protocol: smtp
   default-encoding: UTF-8
+  google:
+    api:
+      key: ${GOOGLE_API_KEY}
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate:
         format_sql: true
@@ -45,3 +48,4 @@ logging:
 
 jwt:
   secret: ${JWT_SECRET}
+
